@@ -1,6 +1,5 @@
 #include<stdio.h>
 void b_sort(int[],int);
-void s_sort(int[],int);
 int main()
 {
     int arr[10],n,i;
@@ -10,7 +9,7 @@ int main()
     {
         scanf("%d",&arr[i]);
     }
-    b_sort(arr,n);
+    s_sort(arr,n);
     printf("After Sorting");
     for(i=0;i<n;i++)
     {
