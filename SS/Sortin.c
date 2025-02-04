@@ -1,7 +1,10 @@
 #include<stdio.h>
 void b_sort(int[],int);
+<<<<<<< HEAD
 void s_sort(int[],int);
 void i_sort(int[],int);
+=======
+>>>>>>> 3852a94dd5f94115749532d5d7fa63478427f9ff
 int main()
 {
     int arr[10],n,i;
@@ -11,7 +14,11 @@ int main()
     {
         scanf("%d",&arr[i]);
     }
+<<<<<<< HEAD
     i_sort(arr,n);
+=======
+    s_sort(arr,n);
+>>>>>>> 3852a94dd5f94115749532d5d7fa63478427f9ff
     printf("After Sorting");
     for(i=0;i<n;i++)
     {
