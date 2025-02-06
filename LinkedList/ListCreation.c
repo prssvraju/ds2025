@@ -45,16 +45,18 @@ struct node* create()
     struct node *head,*first,*newnode;
     first=getNode();
     head=first;
+
     newnode=getNode();
-    printf("Enter the value");
+    printf("Enter the value ");
     scanf("%d",&newnode->data);
-    while (newnode->data!=-99)
+
+    while(newnode->data!=-99)
     {
-        first->next=newnode;
-        first=newnode;
-        newnode=getNode();
-        printf("Enter the value");
-        scanf("%d",&newnode->data);
+      first->next=newnode;
+      first=newnode;
+      newnode=getNode();
+      printf("Enter the value ");
+      scanf("%d",&newnode->data);
     }
     return head->next;
 }
