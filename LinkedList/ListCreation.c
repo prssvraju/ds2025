@@ -3,6 +3,8 @@
 struct node* create();
 void traversal(struct node*);
 struct node *getNode();
+struct node *insert(struct node*);
+struct node *delete(struct node *);
 struct node
 {
     int data;
@@ -14,7 +16,7 @@ int main()
   struct node *head,*first,*newnode;
   while(1)
   {
-    printf("\n1.create\n2.display\n3.Exit");
+    printf("\n1.create\n2.display\n3.Insert\n4.Delete\n5.Exit");
     printf("Enter your choice");
     scanf("%d",&ch);
     switch(ch)
@@ -23,8 +25,11 @@ int main()
                 break;
         case 2 :traversal(head);
                 break;
-        case 3 :
-                exit(0);
+        case 3 :head =insert(head);
+                break;
+        case 4 :head= delete(head);
+                break;
+        case 5 :exit(0);
                 break;
         default :
                 printf("Enter valid choice");
@@ -47,18 +52,89 @@ struct node* create()
     head=first;
 
     newnode=getNode();
-    printf("Enter the value ");
+    printf("Enter the value");
     scanf("%d",&newnode->data);
-
     while(newnode->data!=-99)
     {
-      first->next=newnode;
-      first=newnode;
-      newnode=getNode();
-      printf("Enter the value ");
-      scanf("%d",&newnode->data);
+        first->next=newnode;
+        first=newnode;
+        newnode=getNode();
+        printf("Enter the value");
+        scanf("%d",&newnode->data); 
     }
     return head->next;
+}
+struct node* insert(struct node *head)
+{
+    struct node *temp,*newnode;
+    int ch,pos,i;
+    temp=head;
+
+    newnode=getNode();
+    printf("Enter the value");
+    scanf("%d",&newnode->data); 
+
+    printf("1.Insert in begning\n2.Insert at End\n3.Insert at position\n Enter your choice");
+    scanf("%d",&ch);
+    switch (ch)
+    {
+    case 1:
+        newnode->next=head;
+        head=newnode;
+        break;
+    case 2:
+        while(temp->next!=NULL)
+        {
+            temp=temp->next;
+        }
+        temp->next=newnode;
+        break;
+    case 3:
+        printf("Enter the position");
+        scanf("%d",&pos);
+        if(pos==1)
+        {
+            newnode->next=head;
+            head=newnode;
+        }
+        else
+        {
+            for(i=1;i<pos-1;i++)
+            {
+                temp=temp->next;
+            }
+            newnode->next=temp->next;
+            temp->next=newnode;
+        }
+        break;
+    }
+    return head;
+}
+struct node *delete(struct node *head)
+{
+    struct node *temp;
+    int ch,i;
+    temp=head;
+    if(head == NULL)
+    {
+        printf("List is empty");
+    }
+    else
+    {
+        printf("1.Delete in begning\n2.Delete at End\n3.Delete at position\n Enter your choice");
+        scanf("%d",&ch);
+        switch (ch)
+        {
+        case 1:
+                head=temp->next;
+                free(temp);    
+                return head;
+                break;
+        
+
+        }
+    }
+
 }
 void traversal(struct node *np)
 {
