@@ -30,6 +30,7 @@ struct node * create()
         first->next=newnode;
         newnode->prev=first;
         first=newnode;
+        
         newnode=getNode();
         printf("Enter Data");
         scanf("%d",&newnode->data);
