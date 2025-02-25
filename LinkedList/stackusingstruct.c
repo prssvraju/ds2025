@@ -1,15 +1,23 @@
 #include<stdio.h>
 #include<stdlib.h>
 #define MAX 10
-void push(int);
-int pop();
-int peek();
-void display();
-int items[MAX],top=-1;
+void push(struct stack*,int);
+int pop(struct stack*);
+int peek(struct stack*);
+void display(struct stack*);
+
+struct stack
+{   
+    int items[MAX];
+    int top;
+};
+
 int main()
 {
   int ch,ele;
   //top=-1;
+  struct stack st;
+  st.top=-1;
   while (1)
   {
      printf("\n1.push\n2.pop\n3.peek\n4.diplay\n5.exit");
@@ -19,9 +27,9 @@ int main()
        {
         case 1: printf("Enter element to push");
                 scanf("%d",&ele);
-                push(ele);
+                push(&st,ele);
                 break;
-        case 2: ele=pop();
+        case 2: ele=pop(&st);
                 if(ele==-1)
                 {
                     printf("Stack is empty");
@@ -31,7 +39,7 @@ int main()
                     printf("The deleted element is %d",ele);
                 }
                 break; 
-        case 3: ele=peek();
+        case 3: ele=peek(&st);
                 if(ele==-1)
                 {
                     printf("Stack is empty");
@@ -42,7 +50,7 @@ int main()
                     printf("The top element is %d",ele);
                 }
                 break;
-        case 4: display();
+        case 4: display(&st);
                 break;
         case 5: exit(0);
                 break;
@@ -53,58 +61,59 @@ int main()
   }
 
 }
-void push(int ele)
+void push(struct stack *stp, int ele)
 {
-    if(top==MAX-1)
+    if(stp->top==MAX-1)
     {
         printf("unable to insert");
     }
     else
     {
-        top=top+1;
-        items[top]=ele;
+        stp->top=stp->top+1;
+        stp->items[stp->top]=ele;
     }
 }
-int pop()
+int pop(struct stack *stp)
 {
     int ele;
-    if(top==-1)
+    if(stp->top==-1)
     {
         return -1;
     }
     else
     {
-        ele=items[top];
-        top=top-1;
+        ele=stp->items[stp->top];
+        stp->top=stp->top-1;
         return ele;
     }
 
 }
-void display()
+void display(struct stack *stp)
 {
     int i;
-    if(top==-1)
+    if(stp->top==-1)
     {
         printf("stack is empty");
     }
     else
     {
-        for(i=top;i>=0;i--)
+        for(i=stp->top;i>=0;i--)
         {
-            printf("\n|%d|",items[i]);
+            printf("\n|%d|",stp->items[i]);
         }
     }
 }
-int peek()
+int peek(struct stack *stp)
 {
     int ele;
-    if(top==-1)
+    if(stp->top==-1)
     {
         return -1;
     }
     else
     {
-        ele=items[top];
+        ele=stp->items[stp->top];
         return ele;
     }
+
 }
