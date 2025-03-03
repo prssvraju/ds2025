@@ -5,6 +5,7 @@ void traversal(struct node*);
 struct node *getNode();
 struct node *insert(struct node*);
 struct node *delete(struct node *);
+struct node *reverse(struct node *);
 struct node
 {
     int data;
@@ -16,7 +17,7 @@ int main()
   struct node *head,*first,*newnode;
   while(1)
   {
-    printf("\n1.create\n2.display\n3.Insert\n4.Delete\n5.Exit");
+    printf("\n1.create\n2.display\n3.Insert\n4.Delete\n5.Reverse\n6.exit");
     printf("Enter your choice");
     scanf("%d",&ch);
     switch(ch)
@@ -29,13 +30,32 @@ int main()
                 break;
         case 4 :head= delete(head);
                 break;
-        case 5 :exit(0);
+        case 5 : head=reverse(head);
+                 break;
+        case 6 :exit(0);
                 break;
         default :
                 printf("Enter valid choice");
                 break;
     }
   }
+}
+struct node * reverse(struct node * head)
+{
+    struct node *temp,*newnode,*rhead;
+    temp=head;
+    rhead=getNode();
+    rhead->data=temp->data;
+    while (temp->next!=NULL)
+    {
+        temp=temp->next;
+        newnode=getNode();
+        newnode->data=temp->data;
+        newnode->next=rhead;
+        rhead=newnode;
+    }
+    return rhead;
+    
 }
 struct node* getNode()
 {
@@ -54,7 +74,7 @@ struct node* create()
     newnode=getNode();
     printf("Enter the value");
     scanf("%d",&newnode->data);
-    while(newnode->data!=-99)
+    while(newnode->data!=-9)
     {
         first->next=newnode;
         first=newnode;
