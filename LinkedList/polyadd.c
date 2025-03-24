@@ -1,104 +1,85 @@
 #include<stdio.h>
 #include<stdlib.h>
-struct node
+struct node 
 {
-    int exp;
     int cof;
+    int exp;
     struct node *next;
 };
-struct node *insertPolyNode(struct node*,int,int);
-struct node *getTerm(int,int);
+struct node * insertTerm(struct node*,int,int);
+struct node * getNode(int,int);
 void display(struct node *);
-struct node *polyadd(struct node*,struct node*);
-
+struct node * polyAdd(struct node*,struct node*);
 int main()
 {
-    int c,e,n,i;
-    struct node *polyhead1,*polyhead2,*polyhead3;
-    polyhead1=NULL;
-    printf("Enter the no of terms in 1st expression");
+    int n,i,c,e;
+    struct node *phead1,*phead2,*phead3;
+    phead1=NULL;
+    phead2=NULL;
+    phead3=NULL;
+
+
+    printf("Enter no of Terms in 1st experssion");
     scanf("%d",&n);
     for(i=0;i<n;i++)
     {
-        printf("Enter cof and expo of %d term",i+1);
+        printf("Enter the %d conf and exp",i+1);
         scanf("%d%d",&c,&e);
-        polyhead1=insertPolyNode(polyhead1,c,e);
+        phead1=insertTerm(phead1,c,e);
     }
-
-    printf("Enter the no of terms in 2nd expression");
+    printf("Enter no of Terms in 2nd experssion");
     scanf("%d",&n);
     for(i=0;i<n;i++)
     {
-        printf("Enter cof and expo of %d term",i+1);
+        printf("Enter the %d conf and exp",i+1);
         scanf("%d%d",&c,&e);
-        polyhead2=insertPolyNode(polyhead2,c,e);
+        phead2=insertTerm(phead2,c,e);
     }
+    printf("\nPoly Nomial Expression 1\n");
+    display(phead1);
+    printf("\nPoly Nomial Expression 2\n");
+    display(phead2);
+    phead3=polyAdd(phead1,phead2);
+    printf("\nPoly Addition is  2\n");
+    display(phead3);
+    return 0;
 
-    printf("Polynomila 1\n");
-    display(polyhead1);
-    printf("\nPolynomila 2\n");
-    display(polyhead2);
-
-    //polyhead3=polyadd(polyhead1,polyhead2);
-
-    //printf("\nAdditon is \n");
-    //display(polyhead3);
-    return 0; 
 }
 void display(struct node * phead)
 {
     struct node *temp;
     temp=phead;
-    // while(temp->next!=NULL)
-    // {
-    //     printf("%d*X^%d",temp->cof,temp->exp);
-    //     if(temp!=NULL)
-    //     {
-    //         printf("+");
-    //     }
-    //     else
-    //     {
-    //         printf("\n");
-    //     }
-    //     temp=temp->next;
-    // }
-    // printf("%d*X^%d",temp->cof,temp->exp);
     while(temp!=NULL)
     {
+        
         printf("%d*X^%d+",temp->cof,temp->exp);
         temp=temp->next;
     }
-
 }
-struct node * insertPolyNode(struct node* phead,int cof,int exp)
+struct node * insertTerm(struct node *phead,int c,int e)
 {
-    struct node *temp,*newnode;
+    struct node *temp;
     temp=phead;
-    newnode = getNode(cof,exp);
-    // newnode=(struct node *)malloc(sizeof(struct node));
-    // newnode->cof=cof;
-    // newnode->exp=exp;
-    // newnode->next = NULL;
-    //if head node is null or we are trying to add term with highest exponent it need to add at staring of linke list so we compare exp>temp->exp
-    if(temp==NULL||exp>temp->exp) 
+    struct node *newnode;
+    newnode=getNode(c,e);
+    if(phead==NULL||e>temp->exp)
     {
-        newnode->next = phead;
+        newnode->next=phead;
         phead = newnode;
         return phead;
     }
-    else{
-        //for checking next node is null we use temp->next!=NULL and
-        //find exat location of term based on exp we will check temp->next->exp>exp
-         while(temp->next!=NULL && temp->next->exp > exp)
+    else
+    {
+        while(temp->next!=NULL && temp->exp>e)
         {
             temp=temp->next;
         }
-        newnode->next = temp->next;
-        temp->next = newnode;
+        newnode->next=temp->next;
+        temp->next= newnode;
+        return phead;
     }
-    return phead;
 }
-struct node *getTerm(int c,int e)
+struct node* getNode(int c,int e)
 {
     struct node *pnp;
     pnp=(struct node *)malloc(sizeof(struct node));
@@ -107,39 +88,41 @@ struct node *getTerm(int c,int e)
     pnp->next=NULL;
     return pnp;
 }
-struct node *polyadd(struct node*ph1,struct node*ph2)
+struct node * polyAdd(struct node* phead1,struct node* phead2)
 {
-    struct node *ph1temp,*ph2temp,*ph3;
-    ph1temp=ph1;
-    ph2temp=ph2;
-    while(ph1temp!=NULL && ph2temp!=NULL)
-    {
-        if(ph1temp->exp == ph1temp->exp)
+    struct node *ptr1,*ptr2,*phead3;
+    ptr1=phead1;
+    ptr2=phead2;
+    phead3=NULL;
+    while(ptr1!=NULL && ptr2!=NULL)
+    {   
+        if(ptr1->exp==ptr2->exp)
         {
-            ph3=insertPolyNode(ph3,ph1temp->cof+ph2temp->cof,ph1temp->exp);
-            ph1temp=ph1temp->next;
-            ph2temp=ph2temp->next;
+            phead3=insertTerm(phead3,ptr1->cof+ptr2->cof,ptr1->exp);
+            ptr1=ptr1->next;
+            ptr2=ptr2->next;
         }
-        else if(ph1temp->exp > ph2temp->exp)
+        else if(ptr1->exp>ptr2->exp)
         {
-            ph3=insertPolyNode(ph3,ph1temp->cof,ph1temp->exp);
-            ph1temp=ph1temp->next;
+            phead3=insertTerm(phead3,ptr1->cof,ptr1->exp);
+            ptr1=ptr1->next;
         }
-        else if(ph1temp->exp < ph2temp->exp)
+        else if(ptr1->exp<ptr2->exp)
         {
-            ph3=insertPolyNode(ph3,ph2temp->cof,ph2temp->exp);
-            ph2temp=ph2temp->next;
-        }
+            phead3=insertTerm(phead3,ptr2->cof,ptr2->exp);
+            ptr2=ptr2->next;
+        }   
     }
-    while (ph1temp!=NULL)
+    while (ptr1!=NULL)
     {
-        ph3=insertPolyNode(ph3,ph1temp->cof,ph1temp->exp);
-        ph1temp=ph1temp->next;
+        phead3=insertTerm(phead3,ptr1->cof,ptr1->exp);
+        ptr1=ptr1->next;    
     }
-    while (ph2temp!=NULL)
+    while (ptr2!=NULL)
     {
-        ph3=insertPolyNode(ph3,ph2temp->cof,ph2temp->exp);
-        ph2temp=ph2temp->next;    
-    }
-    return ph3;
+        phead3=insertTerm(phead3,ptr2->cof,ptr2->exp);
+        ptr2=ptr2->next;    
+    } 
+
+    return phead3;
 }
