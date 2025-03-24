@@ -10,6 +10,8 @@ struct node * insertTerm(struct node*,int,int);
 struct node * getNode(int,int);
 void display(struct node *);
 struct node * polyAdd(struct node*,struct node*);
+struct node *polyMul1(struct node*,struct node*);
+struct node *polyMul2(struct node*,struct node*);
 int main()
 {
     int n,i,c,e;
@@ -39,8 +41,8 @@ int main()
     display(phead1);
     printf("\nPoly Nomial Expression 2\n");
     display(phead2);
-    phead3=polyAdd(phead1,phead2);
-    printf("\nPoly Addition is  2\n");
+    phead3=polyMul2(phead1,phead2);
+    printf("\nPoly Mul is  2\n");
     display(phead3);
     return 0;
 
@@ -87,6 +89,49 @@ struct node* getNode(int c,int e)
     pnp->exp=e;
     pnp->next=NULL;
     return pnp;
+}
+struct node *polyMul2(struct node *phead1,struct node* phead2)
+{
+    struct node *ptr1,*ptr2;
+    ptr1=phead1;
+    int rc,re;
+    struct node *sop =NULL,*pos=NULL;
+    while (ptr1!=NULL)
+    {
+        ptr2=phead2;
+        while (ptr2!=NULL)
+        {
+            rc=ptr1->cof*ptr2->cof;
+            re=ptr1->exp+ptr2->exp;
+            pos=insertTerm(pos,rc,re);
+            ptr2=ptr2->next;
+        }
+        sop=polyAdd(sop,pos);
+        pos=NULL;
+        ptr1=ptr1->next;
+    }
+    return sop;
+}
+
+struct node *polyMul1(struct node *phead1,struct node* phead2)
+{
+    struct node *ptr1,*ptr2,*phead3;
+    ptr1=phead1;
+    int rc,re;
+    phead3=NULL;
+    while (ptr1!=NULL)
+    {
+        ptr2=phead2;
+        while (ptr2!=NULL)
+        {
+            rc=ptr1->cof*ptr2->cof;
+            re=ptr1->exp+ptr2->exp;
+            phead3=insertTerm(phead3,rc,re);
+            ptr2=ptr2->next;
+        }
+        ptr1=ptr1->next;
+    }
+    return phead3;
 }
 struct node * polyAdd(struct node* phead1,struct node* phead2)
 {
