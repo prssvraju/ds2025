@@ -1,6 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
-#define MAX 10
+#define MAX 4
 struct queue
 {   
     int items[MAX];
