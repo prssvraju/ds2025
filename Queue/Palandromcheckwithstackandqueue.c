@@ -53,6 +53,7 @@ int isPalindrome(char str[]) {
 
     // Fill stack and queue
     for (int i = 0; i < len; i++) {
+        printf("\n%c",str[i]);
         push(cleaned[i]);
         enqueue(cleaned[i]);
     }
